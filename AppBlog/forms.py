@@ -1,19 +1,28 @@
 from django import forms
-from .models import Categoria, Autor, Articulo
+from .models import Categoria, Articulo, Comentario
+from django.contrib.auth.models import User
 
-class AutorFormulario(forms.Form):
-    nombre = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    
 class CategoriaFormulario(forms.Form):
     nombre = forms.CharField(max_length=50)
     
-class ArticuloFormulario(forms.Form):
-    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all())
-    autor = forms.ModelChoiceField(queryset=Autor.objects.all())
-    titulo = forms.CharField(max_length=50)
-    texto = forms.CharField(max_length=250)
-    fecha_publicacion = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        input_formats=['%Y-%m-%dT%H:%M:%S']
-    )
+class ArticuloFormulario(forms.ModelForm):
+    class Meta:
+        model = Articulo
+        fields = ['categoria', 'titulo', 'subtitulo', 'texto', 'imagen']
+        
+    def __init__(self, *args, **kwargs):
+        super(ArticuloFormulario, self).__init__(*args, **kwargs)
+        
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['comentario']
+        
+    def __init__(self, *args, **kwargs):
+        super(ComentarioForm, self).__init__(*args, **kwargs)
+        
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
