@@ -47,6 +47,12 @@ def register(request):
     return render(request, 'register.html', {'formulario': formulario, 'error_message': error_message})
 
 @login_required
+def ver_perfil(request):
+    info_extra = request.user.infoextra
+    
+    return render(request, 'ver_perfil.html', {'info_extra': info_extra})
+
+@login_required
 def editar_perfil(request):
     
     info_extra = request.user.infoextra

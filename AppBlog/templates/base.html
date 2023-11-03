@@ -42,7 +42,7 @@
                                 <img src={{request.user.infoextra.avatar.url}} alt="" height="40px">
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'editar_perfil' %}">{{request.user.username}}</a>
+                                <a class="nav-link" href="{% url 'ver_perfil' %}">{{request.user.username}}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
